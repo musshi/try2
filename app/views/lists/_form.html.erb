@@ -1,0 +1,12 @@
+<%= form_for :list, url: lists_path do |f| %>
+  
+  <p>
+    <%= f.label :name  %><br>
+    <%= f.text_field :name %>
+  </p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+<%= link_to "My Item", lists_path%>

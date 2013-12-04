@@ -1,0 +1,19 @@
+<h1>Your List</h1>
+  <%= link_to 'New List', new_list_url %>
+  <br>
+  <br>
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+ 
+  <% @lists.each do |list| %>
+    <tr>
+      <td><%= list.name %></td>
+     
+      <td><%= link_to 'Show', list_url(list.id) %></td>
+      <td><%= link_to 'Remove list', list_url(list.id), :method => :delete  %></td>
+    </tr>
+  <% end %>
+  </table>
+  <%= link_to "My List", controller: "lists" %>

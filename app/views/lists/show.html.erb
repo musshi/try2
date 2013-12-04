@@ -1,0 +1,34 @@
+<p>
+  <strong>List:</strong>
+  <%= @list.name%>
+</p>
+
+
+
+<% @list.tasks.each do |task| %>
+  <p>
+    <input type="checkbox" name="#{task.name}" value="#{task.id}"> <%= task.name %>
+    <%= link_to 'Delete task', [task.list, task],
+                 method: :delete,
+                 data: { confirm: 'Are you sure?' } %>
+    <br>
+    </p>
+<% end %> 
+
+ 
+<h2>Add some tasks:</h2>
+<%= form_for([@list, @list.tasks.build]) do |f| %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :completed %><br />
+    <%= f.text_field :completed %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+
+<%= link_to "My List", controller: "lists" %>

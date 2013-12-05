@@ -1,19 +1,26 @@
 <p>
   <strong>List:</strong>
   <%= @list.name%>
+  <%= link_to "My List", controller: "lists" %>
 </p>
+ <%= link_to 'Edit', edit_list_url(@list.id) %>
 
 
 
-<% @list.tasks.each do |task| %>
-  <p>
-    <input type="checkbox" name="#{task.name}" value="#{task.id}"> <%= task.name %>
-    <%= link_to 'Delete task', [task.list, task],
-                 method: :delete,
-                 data: { confirm: 'Are you sure?' } %>
-    <br>
-    </p>
-<% end %> 
+<div class="tasks-not-completed">
+  <% @list.tasks.each do |task| %>
+    <% if task.completed == false %>
+      <p class="item-task">
+        <input type="checkbox" name="#{task.name}" value="#{task.id}" data-list-id="<%= @list.id %>"         data-task-id="<%= task.id %>"> <%= task.name %>
+        <%= link_to 'Delete task', [task.list, task],
+                     method: :delete,
+                     data: { confirm: 'Are you sure?' } %>
+        <br>
+      </p>
+    <% end %>   
+  <% end %> 
+</div>
+
 
 
 <html>
@@ -21,18 +28,19 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
 </script>
 <script>
-$(document).ready(function(){
-  $("#hide").click(function(){
-    $("div").hide();
+  $(document).ready(function(){
+    $("#hide").click(function(){
+      $("div.add-task").hide();
+    });
+    $("#show").click(function(){
+      $("div.add-task").show();
+    });
   });
-  $("#show").click(function(){
-    $("div").show();
-  });
-});
 </script>
+
 </head>
 <body>
-  <div class="div">
+  <div class="add-task">
     <h2>Add some tasks:</h2>
      <%= form_for([@list, @list.tasks.build]) do |f| %>
       <p>
@@ -47,12 +55,29 @@ $(document).ready(function(){
   </div>
 <button id="hide">Close</button>
 <button id="show">Add a new task</button>
+
+
+
+
 </body>
 </html>
 
-  
+<div class="tasks-is-completed">
+  <% @list.tasks.each do |task| %>
+    <% if task.completed == true %>
+      <p class="item-task">
+        <input type="checkbox" name="<%= task.id %>" value="<%= task.name %>" data-list-id="<%= @list.id %>"         data-task-id="<%= task.id %>" checked="checked"> <%= task.name %>
+        <%= link_to 'Delete task', [task.list, task],
+                     method: :delete,
+                     data: { confirm: 'Are you sure?' } %>
+        <br>
+      </p>
+    <% end %>   
+  <% end %> 
+</div>
 
 
 
 
-<%= link_to "My List", controller: "lists" %>
+
+

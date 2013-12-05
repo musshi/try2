@@ -2,7 +2,16 @@ Try2::Application.routes.draw do
   devise_for :users
 
   resources :lists do
-     resources :tasks
+     member do
+        get 'tasks_is_completed'
+        get 'tasks_not_completed'
+     end
+     resources :tasks do 
+       member do
+         put 'update_status'
+  
+       end
+     end 
   end
   root :to => 'welcome#index'
   #get "welcome/index"

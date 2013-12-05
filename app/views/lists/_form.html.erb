@@ -1,12 +1,13 @@
-<%= form_for :list, url: lists_path do |f| %>
-  
-  <p>
-    <%= f.label :name  %><br>
-    <%= f.text_field :name %>
-  </p>
- 
-  <p>
-    <%= f.submit %>
-  </p>
-<% end %>
+
 <%= link_to "My Item", lists_path%>
+<%= form_for @list do |form| %>
+<label>
+<p><%= form.label :name, "Title"%></p>
+<p> <%= form.text_field :name %></p>
+</label>
+<p><%= form.label :name, "Items"%></p>
+<%= form.fields_for :tasks do |task_form|%>
+  <%= task_form.text_field :name %>
+<% end %>
+<p><%= form.submit "Save this list"%></p>
+<% end %>

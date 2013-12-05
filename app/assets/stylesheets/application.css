@@ -11,3 +11,13 @@
  *= require_self
  *= require_tree .
  */
+body{
+  
+}
+/*h2 {
+  text-align: center;
+}*/
+form#new_user{
+  margin: 0 auto;
+  width: 200px;
+}

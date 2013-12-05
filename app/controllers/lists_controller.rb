@@ -1,5 +1,6 @@
 class ListsController < ApplicationController
-  before_filter :authenticate_user!
+  skip_before_filter :authenticate_user!, :only => [:tasks_is_completed, :tasks_not_completed]
+  
   def index
     @lists = current_user.lists
   end
@@ -8,7 +9,7 @@ class ListsController < ApplicationController
     @list = current_user.lists.new
 
   end
-  
+    
   def create
     @list = current_user.lists.new(params[:list]) 
     
@@ -42,4 +43,15 @@ class ListsController < ApplicationController
     redirect_to @list
   end
   
+  def tasks_is_completed
+    @list = List.find(params[:id])
+    @tasks = @list.tasks.where(:completed => true)
+    render :layout => false
+  end  
+  
+  def tasks_not_completed
+    @list = List.find(params[:id])
+    @tasks = @list.tasks.where(:completed => false)
+    render :layout => false
+  end  
 end

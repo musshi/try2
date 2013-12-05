@@ -1,0 +1,9 @@
+<% @tasks.each do |task| %>
+     <p class="item-task">
+        <input type="checkbox" name="<%= task.id %>" value="<%= task.name %>" data-list-id="<%= @list.id %>"         data-task-id="<%= task.id %>"> <%= task.name %>
+        <%= link_to 'Delete task', [task.list, task],
+                     method: :delete,
+                     data: { confirm: 'Are you sure?' } %>
+        <br>
+     </p>
+<% end %> 

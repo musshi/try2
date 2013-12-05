@@ -15,20 +15,44 @@
     </p>
 <% end %> 
 
- 
-<h2>Add some tasks:</h2>
-<%= form_for([@list, @list.tasks.build]) do |f| %>
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :completed %><br />
-    <%= f.text_field :completed %>
-  </p>
-  <p>
-    <%= f.submit %>
-  </p>
-<% end %>
+
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
+<script>
+$(document).ready(function(){
+  $("#hide").click(function(){
+    $("div").hide();
+  });
+  $("#show").click(function(){
+    $("div").show();
+  });
+});
+</script>
+</head>
+<body>
+  <div class="div">
+    <h2>Add some tasks:</h2>
+     <%= form_for([@list, @list.tasks.build]) do |f| %>
+      <p>
+        <%= f.label :name %><br />
+        <%= f.text_field :name %>
+      </p>
+  
+      <p>
+        <%= f.submit %>
+      </p>
+    <% end %>
+  </div>
+<button id="hide">Close</button>
+<button id="show">Add a new task</button>
+</body>
+</html>
+
+  
+
+
+
 
 <%= link_to "My List", controller: "lists" %>

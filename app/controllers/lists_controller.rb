@@ -1,14 +1,16 @@
 class ListsController < ApplicationController
+  before_filter :authenticate_user!
   def index
-    @lists = List.all
+    @lists = current_user.lists
   end
   
   def new
-    @list = List.new
+    @list = current_user.lists.new
+
   end
   
   def create
-    @list = List.new(params[:list]) 
+    @list = current_user.lists.new(params[:list]) 
     
     if @list.save 
       redirect_to @list
@@ -18,15 +20,15 @@ class ListsController < ApplicationController
   end
   
   def show
-    @list = List.find(params[:id])
+    @list = current_user.lists.find(params[:id])
   end
   
   def edit
-    @list = List.find(params[:id])
+    @list = current_user.lists.find(params[:id])
   end
   
   def update
-    @list = List.find(params[:id])
+    @list = current_user.lists.find(params[:id])
     if @list.update(params[:list])
       redirect_to @list
     else
@@ -35,7 +37,7 @@ class ListsController < ApplicationController
   end
   
   def destroy
-    @list = List.find(params[:id])
+    @list = current_user.lists.find(params[:id])
     @list.destroy
     redirect_to @list
   end

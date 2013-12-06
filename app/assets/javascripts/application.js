@@ -10,9 +10,10 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require jquery
+//= require jquery-1.9.1
 //= require jquery_ujs
-//= require_tree .
+//= require jquery-ui
+
 $(document).ready(function(e){
   
   $(document.body).delegate("div.add-task form#new_task input[type=submit]", "click", function(e) { 

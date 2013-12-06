@@ -17,7 +17,22 @@ body{
 /*h2 {
   text-align: center;
 }*/
-form#new_user{
+/*form#new_user{
   margin: 0 auto;
   width: 200px;
+}*/
+
+/*#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 35px; }*/
+#sortable li span { position: absolute; margin-left: -1.3em; }
+
+p.item-task {
+font-size: 0.8em;
+}
+#sortable li {
+margin: 0 3px 3px 3px;
+padding: 0.4em;
+padding-left: 1.5em;
+font-size: 1.4em;
+height: 35px;
 }

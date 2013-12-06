@@ -4,29 +4,79 @@
   <%= link_to "My List", controller: "lists" %>
 </p>
  <%= link_to 'Edit', edit_list_url(@list.id) %>
+ <%= link_to 'Reorder', tasks_not_completed_reorder_list_url(@list.id) %>
+ 
+ <style>
+ ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
+ li { margin: 5px; padding: 5px; width: 150px; }
+ </style>
+ <script>
 
+ $(function() {
+     $( "#sortable" ).sortable();
+     $( "#sortable" ).disableSelection();
+   });
+   
+ </script>
+<% if @reorder == false %>
+  <div class="tasks-not-completed">
+     <ul id="sortable">
+       <% @list.tasks.each do |task| %>
+         <% if task.completed == false %>         
+             <p class="item-task">
+               <input type="checkbox" name="#{task.name}" value="#{task.id}" data-list-id="<%= @list.id %>"         data-task-id="<%= task.id %>"> <%= task.name %>              
+               <br>
+             </p>                  
+         <% end %>   
+       <% end %>      
+     </ul>
+  </div>
 
-
-<div class="tasks-not-completed">
-  <% @list.tasks.each do |task| %>
-    <% if task.completed == false %>
-      <p class="item-task">
-        <input type="checkbox" name="#{task.name}" value="#{task.id}" data-list-id="<%= @list.id %>"         data-task-id="<%= task.id %>"> <%= task.name %>
-        <%= link_to 'Delete task', [task.list, task],
-                     method: :delete,
-                     data: { confirm: 'Are you sure?' } %>
-        <br>
+  <div class="add-task">
+    <h2>Add some tasks:</h2>
+     <%= form_for([@list, @list.tasks.build]) do |f| %>
+      <p>
+        <%= f.label :name %><br />
+        <%= f.text_field :name %>
       </p>
-    <% end %>   
-  <% end %> 
-</div>
 
+      <p>
+        <%= f.submit %>
+      </p>
+    <% end %>
+  </div>
+  <button id="hide">Close</button>
+  <button id="show">Add a new task</button>
 
+  <div class="tasks-is-completed">
+    <% @list.tasks.each do |task| %>
+      <% if task.completed == true %>
+        <p class="item-task">
+          <input type="checkbox" name="<%= task.id %>" value="<%= task.name %>" data-list-id="<%= @list.id %>"         data-task-id="<%= task.id %>" checked="checked"> <%= task.name %>        
+          <br>
+        </p>
+      <% end %>   
+    <% end %> 
+  </div>
+  
+<% else %>
+  <div class="tasks-not-completed">
+     <ul id="sortable">
+       <% @list.tasks.each do |task| %>
+         <% if task.completed == false %>
+          <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+             <p class="item-task">
+               <input type="checkbox" name="#{task.name}" value="#{task.id}" data-list-id="<%= @list.id %>"         data-task-id="<%= task.id %>"> <%= task.name %>             
+               <br>
+             </p>       
+           </li>
+         <% end %>   
+       <% end %> 
+     </ul>
+  </div>
+  
+<% end %>
 
-<html>
-<head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-</script>
 <script>
   $(document).ready(function(){
     $("#hide").click(function(){
@@ -37,45 +87,6 @@
     });
   });
 </script>
-
-</head>
-<body>
-  <div class="add-task">
-    <h2>Add some tasks:</h2>
-     <%= form_for([@list, @list.tasks.build]) do |f| %>
-      <p>
-        <%= f.label :name %><br />
-        <%= f.text_field :name %>
-      </p>
-  
-      <p>
-        <%= f.submit %>
-      </p>
-    <% end %>
-  </div>
-<button id="hide">Close</button>
-<button id="show">Add a new task</button>
-
-
-
-
-</body>
-</html>
-
-<div class="tasks-is-completed">
-  <% @list.tasks.each do |task| %>
-    <% if task.completed == true %>
-      <p class="item-task">
-        <input type="checkbox" name="<%= task.id %>" value="<%= task.name %>" data-list-id="<%= @list.id %>"         data-task-id="<%= task.id %>" checked="checked"> <%= task.name %>
-        <%= link_to 'Delete task', [task.list, task],
-                     method: :delete,
-                     data: { confirm: 'Are you sure?' } %>
-        <br>
-      </p>
-    <% end %>   
-  <% end %> 
-</div>
-
 
 
 

@@ -15,12 +15,6 @@ class TasksController < ApplicationController
   end
   
   def update_status
-    # if user_signed_in? 
-    #       puts "okay"
-    #     else
-    #       puts "why not login"
-    #     end    
-    # @list = List.find(params[:list_id])
     @list = current_user.lists.find(params[:list_id])
     @task = @list.tasks.find(params[:id])
     @task.completed =  !@task.completed

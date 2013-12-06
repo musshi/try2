@@ -22,6 +22,7 @@ class ListsController < ApplicationController
   
   def show
     @list = current_user.lists.find(params[:id])
+    @reorder = false
   end
   
   def edit
@@ -30,7 +31,7 @@ class ListsController < ApplicationController
   
   def update
     @list = current_user.lists.find(params[:id])
-    if @list.update(params[:list])
+    if @list.update_attributes(params[:list])
       redirect_to @list
     else
       render 'edit'
@@ -53,5 +54,12 @@ class ListsController < ApplicationController
     @list = List.find(params[:id])
     @tasks = @list.tasks.where(:completed => false)
     render :layout => false
+  end  
+  
+  def tasks_not_completed_reorder
+    @list = List.find(params[:id])
+    @tasks = @list.tasks.where(:completed => false)
+    @reorder = true
+    render "lists/show"
   end  
 end

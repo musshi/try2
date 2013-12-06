@@ -1,13 +1,21 @@
-
-<%= link_to "My Item", lists_path%>
-<%= form_for @list do |form| %>
-<label>
-<p><%= form.label :name, "Title"%></p>
-<p> <%= form.text_field :name %></p>
-</label>
-<p><%= form.label :name, "Items"%></p>
-<%= form.fields_for :tasks do |task_form|%>
-  <%= task_form.text_field :name %>
+<%= link_to "My list", lists_path%>
+<% if @list.new_record? == false %>
+  <%= link_to 'Delete list', list_url(@list.id), :method => :delete, :confirm => "Are you sure you want to delete this list?"  %>
 <% end %>
-<p><%= form.submit "Save this list"%></p>
+
+<%= form_for @list do |form| %>
+  <label>
+    <p><%= form.label :name, "Title"%></p>
+    <p><%= form.text_field :name %></p>
+  </label>
+  
+  <p><%= form.label :name, "Items" %></p>
+  
+  <%= form.fields_for :tasks do |task_form| %>
+    <p><%= task_form.text_field :name %></p>
+    <%= task_form.label :_destroy, "Remove" %>
+  <% end %>
+  
+  <p><%= form.submit "Save this list"%></p>
+  
 <% end %>

@@ -15,7 +15,7 @@
 //= require jquery-ui
 
 $(document).ready(function(e){
-  
+ 
   $(document.body).delegate("div.add-task form#new_task input[type=submit]", "click", function(e) { 
     var form = $(this).parents('form:first');
     $.ajax({
@@ -33,27 +33,26 @@ $(document).ready(function(e){
   $(document.body).delegate("p.item-task input", "change", function() { 
     var listId = $(this).attr("data-list-id");
     var taskId = $(this).attr("data-task-id");
-    
     $.ajax({
-         type: "put",
-         url: "/lists/" + listId + "/tasks/" + taskId + "/update_status",
-         data: {authenticity_token: window._authenticity_token},
-         success: function(response) {  
-           if(response == "successful") {
-             $.ajax({
-                  type: "get",
-                  url: " /lists/"+ listId +"/tasks_is_completed",
-                  success: function(response23) {  
-                    $('div.tasks-is-completed').html(response23);
-                  }
-              });
-            $.ajax({
-                 type: "get",
-                 url: " /lists/"+ listId +"/tasks_not_completed",
-                 success: function(response2) {  
-                   $('div.tasks-not-completed').html(response2);
-                 }
-             });
+      type: "put",
+      url: "/lists/" + listId + "/tasks/" + taskId + "/update_status",
+      data: {authenticity_token: window._authenticity_token},
+      success: function(response) {  
+        if(response == "successful") {
+          $.ajax({
+            type: "get",
+            url: " /lists/"+ listId +"/tasks_is_completed",
+            success: function(response) {  
+              $('div.tasks-is-completed').html(response);
+            }
+          });
+          $.ajax({
+            type: "get",
+            url: " /lists/"+ listId +"/tasks_not_completed",
+            success: function(response) {  
+              $('div.tasks-not-completed').html(response);
+            }
+          });
                
         }
       }

@@ -6,6 +6,7 @@ Try2::Application.routes.draw do
         get 'tasks_is_completed'
         get 'tasks_not_completed'
         get 'tasks_not_completed_reorder'
+        put 'update_position_tasks'
      end
      resources :tasks do 
        member do

@@ -1,7 +1,7 @@
 <p>
   <strong>List:</strong>
   <%= @list.name%>
-  <%= link_to "My List", controller: "lists" %>
+  <td><%= link_to 'Delete list', list_url(@list.id), :method => :delete, :confirm => "Are you sure you want to delete this list?"   %></td>  
 </p>
  <%= link_to 'Edit', edit_list_url(@list.id) %>
  <%= link_to 'Reorder', tasks_not_completed_reorder_list_url(@list.id) %>
@@ -13,7 +13,26 @@
  <script>
 
  $(function() {
-     $( "#sortable" ).sortable();
+     $( "#sortable" ).sortable({
+       stop: function(event, ui) {
+         var myHash = {};
+         var listId = 0;
+         // get id, and position of each of the elements and send to server
+         $("#sortable").children('li').each(function (index, element) {
+           var dataTaskId = $(this).find('input:first').attr("data-task-id");
+           listId = $(this).find('input:first').attr("data-list-id");
+           myHash[index] = {"id": dataTaskId, "position": index};
+          
+        });
+        $.ajax({
+             type: "put",
+             url: " /lists/"+ listId +"/update_position_tasks",
+             data: myHash,
+             success: function(response) {  
+             }
+         });
+       }
+     });
      $( "#sortable" ).disableSelection();
    });
    
@@ -87,7 +106,7 @@
     });
   });
 </script>
-
+<%= link_to "My List", controller: "lists" %>
 
 
 

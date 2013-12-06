@@ -14,13 +14,22 @@
   </tr>
  
   <% @lists.each do |list| %>
-    <tr>
-      <td><%= list.name %></td>     
-      <td><%= link_to 'Show', list_url(list.id) %></td>
-      <td><%= link_to 'Remove list', list_url(list.id), :method => :delete  %></td>
-    </tr>
-    
-  <% end %>
+      <ul>
+      <li><%= list.name %>    
+      <%= link_to 'Show', list_url(list.id) %>
+      <%= list.count_tasks_not_completed %> left            
+      </li>
+      </ul>  
+  <% end %> 
   </table>
   
-  <%= link_to "My List", controller: "lists" %>
+  completed lists :
+    <% @lists.each do |list| %>
+      <% if (list.count_tasks_not_completed == 0) %>
+      <%= link_to list.name, list_url(list.id) %>,
+      <% else %>
+    <% end %> 
+     <% end %> 
+ 
+  
+  

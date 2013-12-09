@@ -66,11 +66,12 @@ class ListsController < ApplicationController
   def update_position_tasks
     tasks_attributes = {}
     @list = current_user.lists.find(params[:id].to_i)
-    params.delete("id")
-    params.delete("action")
-    params.delete("controller")
-    tasks_attributes["tasks_attributes"] = params[:list]    
-    @list.update_attributes(tasks_attributes)
+    puts params.inspect
+    # params.delete("id")
+    # params.delete("action")
+    # params.delete("controller")
+    # tasks_attributes["tasks_attributes"] = params[:list]    
+    @list.update_attributes(params[:list])
     render :text => "successful"
   end
 end

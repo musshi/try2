@@ -16,6 +16,32 @@
 
 $(document).ready(function(e){
  
+  $(function() {
+      $( "#sortable" ).sortable({
+        stop: function(event, ui) {
+          var myHash = {};
+          var listHash = {};
+          var listId = 0;
+          // get id, and position of each of the elements and send to server
+          $("#sortable").children('li').each(function (index, element) {
+            var dataTaskId = $(this).find('input:first').attr("data-task-id");
+            listId = $(this).find('input:first').attr("data-list-id");
+            myHash[index] = {"id": dataTaskId, "position": index};          
+         });
+         
+         listHash["list"] = {"tasks_attributes": myHash};
+         $.ajax({
+              type: "put",
+              url: " /lists/"+ listId +"/update_position_tasks",
+              data: listHash,
+              success: function(response) {  
+              }
+          });
+        }
+      });
+      $( "#sortable" ).disableSelection();
+    });
+    
   $(document.body).delegate("div.add-task form#new_task input[type=submit]", "click", function(e) { 
     var form = $(this).parents('form:first');
     $.ajax({

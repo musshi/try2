@@ -12,29 +12,7 @@
  </style>
  <script>
 
- $(function() {
-     $( "#sortable" ).sortable({
-       stop: function(event, ui) {
-         var myHash = {};
-         var listId = 0;
-         // get id, and position of each of the elements and send to server
-         $("#sortable").children('li').each(function (index, element) {
-           var dataTaskId = $(this).find('input:first').attr("data-task-id");
-           listId = $(this).find('input:first').attr("data-list-id");
-           myHash[index] = {"id": dataTaskId, "position": index};
-          
-        });
-        $.ajax({
-             type: "put",
-             url: " /lists/"+ listId +"/update_position_tasks",
-             data: myHash,
-             success: function(response) {  
-             }
-         });
-       }
-     });
-     $( "#sortable" ).disableSelection();
-   });
+
    
  </script>
 <% if @reorder == false %>
@@ -58,11 +36,11 @@
         <%= f.label :name %><br />
         <%= f.text_field :name %>
       </p>
-
       <p>
         <%= f.submit %>
       </p>
     <% end %>
+    
   </div>
   <button id="hide">Close</button>
   <button id="show">Add a new task</button>
